@@ -96,7 +96,9 @@ describe('Acceptance', function () {
       let app = new AddonTestApp();
       let engineName = 'lazy';
 
-      await app.create('engine-testing', CreateOptions);
+      await app.create('engine-testing', { ...CreateOptions, skipNpm: true });
+      await app.run('npm', 'install');
+
       await InRepoEngine.generate(app, engineName, { lazy: true });
 
       let output = await build(app, 'production');
